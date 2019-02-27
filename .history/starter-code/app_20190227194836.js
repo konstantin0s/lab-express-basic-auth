@@ -5,11 +5,11 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const path         = require('path');
 const bodyParser   = require('body-parser');
+const cors = require('cors');
 const request = require('request');
 const session    = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const cookieParser = require('cookie-parser');
-const favicon      = require('serve-favicon');
 
 
 const app = express();
@@ -28,9 +28,10 @@ mongoose
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
 
+const app = express();
 
 // Middleware Setup
-// app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -54,23 +55,6 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
-app.get('/', function(req, res){
-  res.cookie('name', 'login'); //Sets name = express
-  res.render('index');
-});
-
-
-  //add session
-  app.use(session({
-    secret: "basic-auth-secret",
-    cookie: { maxAge: 60000 },
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection,
-      ttl: 24 * 60 * 60 // 1 day
-    })
-  }));
-
-
 
 
 const index = require('./routes/index');
@@ -85,10 +69,6 @@ app.use((req, res, next) => {
     res.redirect("/login");         //    |
   }                                 //    |
 }); 
-
-const secretPage = require('./routes/secret');
-app.use('/', secretPage);
-
 
 
 

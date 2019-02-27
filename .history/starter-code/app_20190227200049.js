@@ -55,7 +55,7 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.locals.title = 'Express - Generated with IronGenerator';
 
 app.get('/', function(req, res){
-  res.cookie('name', 'login'); //Sets name = express
+  res.cookie('name', 'recipes'); //Sets name = express
   res.render('index');
 });
 
@@ -78,17 +78,13 @@ app.use('/', index);
 const authRouter = require('./routes/auth');
 app.use('/', authRouter);
 
-app.use((req, res, next) => {
-  if (req.session.currentUser) { // <== if there's user in the session (user is logged in)
-    next(); // ==> go to the next route ---
-  } else {                          //    |
-    res.redirect("/login");         //    |
-  }                                 //    |
-}); 
-
-const secretPage = require('./routes/secret');
-app.use('/', secretPage);
-
+// app.use((req, res, next) => {
+//   if (req.session.currentUser) { // <== if there's user in the session (user is logged in)
+//     next(); // ==> go to the next route ---
+//   } else {                          //    |
+//     res.redirect("/login");         //    |
+//   }                                 //    |
+// }); 
 
 
 

@@ -77,18 +77,16 @@ const index = require('./routes/index');
 app.use('/', index);
 const authRouter = require('./routes/auth');
 app.use('/', authRouter);
-
-app.use((req, res, next) => {
-  if (req.session.currentUser) { // <== if there's user in the session (user is logged in)
-    next(); // ==> go to the next route ---
-  } else {                          //    |
-    res.redirect("/login");         //    |
-  }                                 //    |
-}); 
-
 const secretPage = require('./routes/secret');
 app.use('/', secretPage);
 
+// app.use((req, res, next) => {
+//   if (req.session.currentUser) { // <== if there's user in the session (user is logged in)
+//     next(); // ==> go to the next route ---
+//   } else {                          //    |
+//     res.redirect("/login");         //    |
+//   }                                 //    |
+// }); 
 
 
 

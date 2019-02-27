@@ -54,23 +54,6 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
-app.get('/', function(req, res){
-  res.cookie('name', 'login'); //Sets name = express
-  res.render('index');
-});
-
-
-  //add session
-  app.use(session({
-    secret: "basic-auth-secret",
-    cookie: { maxAge: 60000 },
-    store: new MongoStore({
-      mongooseConnection: mongoose.connection,
-      ttl: 24 * 60 * 60 // 1 day
-    })
-  }));
-
-
 
 
 const index = require('./routes/index');
@@ -85,10 +68,6 @@ app.use((req, res, next) => {
     res.redirect("/login");         //    |
   }                                 //    |
 }); 
-
-const secretPage = require('./routes/secret');
-app.use('/', secretPage);
-
 
 
 
